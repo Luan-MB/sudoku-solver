@@ -1,7 +1,11 @@
+body {
+    background: linear-gradient(to right, rgb(157, 157, 212), rgb(174, 219, 174));
+}
+
 #grid {
     display: grid;
-    grid-template-rows: repeat(9, 30px);
-    grid-template-columns: repeat(9, 30px);
+    grid-template-rows: repeat(9, 40px);
+    grid-template-columns: repeat(9, 40px);
 }
 
 input {

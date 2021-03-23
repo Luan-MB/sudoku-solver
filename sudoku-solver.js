@@ -1,21 +1,23 @@
-function readcells() {
-    var cells = [];
+var INPUT = [];
+
+function readCells() {
 
     for (var i=0;i<81;i++) {
-        cells.push($('input[type="number"]')[i].value);
+        INPUT.push($('input[type="number"]')[i]);
     }
     
     var grid = [];
 
+    k = 0;
     for (var i=0;i<9;i++) {
         grid[i] = [];
         for (var j=0;j<9;j++)
-            grid[i][j] = cells.shift();
+            grid[i][j] = INPUT[k++].value;
     }
     return grid;
 }
 
-function checkrow(cells, row, col, num) {
+function checkRow(cells, row, col, num) {
     for (var i=0;i<9;i++) {
         if ((i != col) && (num == cells[row][i]))
             return true;
@@ -23,7 +25,7 @@ function checkrow(cells, row, col, num) {
     return false;
 }
 
-function checkcol(cells, row, col, num) {
+function checkCol(cells, row, col, num) {
     for (var j=0;j<9;j++) {
         if ((j != row) && (num == cells[j][col]))
             return true;
@@ -31,7 +33,7 @@ function checkcol(cells, row, col, num) {
     return false;
 }
 
-function checkbox(cells, row, col,num) {
+function checkBox(cells, row, col,num) {
     var ibox, jbox;
 
     if (row < 3)
@@ -59,20 +61,20 @@ function checkbox(cells, row, col,num) {
 
 function conflict(grid,row,col,num) {
 
-    if (checkrow(grid,row,col,num) || checkcol(grid,row,col,num) || checkbox(grid,row,col,num))
+    if (checkRow(grid,row,col,num) || checkCol(grid,row,col,num) || checkBox(grid,row,col,num))
         return true;
     return false;
 }
 
-function checkinput(grid) {
+function invalidInput(grid) {
 
     for (var row=0;row<grid.length;row++) {
         for (var col=0;col<grid[row].length;col++) {
             if (grid[row][col] != "" && conflict(grid,row,col,grid[row][col]))
-                return false;
+                return true;
         }
     }
-    return true;
+    return false;
 }
 
 function solve(grid) {
@@ -106,19 +108,27 @@ function solve(grid) {
     return false;
 }
 
-function writecells(grid) {
+function writeCells(grid) {
     
+    for (row=0;row<grid.length;row++) {
+        for (col=0;col<grid[row].length;col++) {
+            elem = INPUT.shift();
+            elem.value = grid[row][col];
+            elem.disabled = true;
+        }
+    }
 }
 
 $(document).ready(function(){
     $("#enter").click(function(){
-        var grid = readcells();
-        if (!checkinput(grid))
+        var grid = readCells();
+        if (invalidInput(grid))
             console.log("Entrada inválida");
         else {
-            if (solve(grid))
+            if (solve(grid)) {
+                writeCells(grid);
                 console.log(grid);
-            else
+            } else
                 console.log("Não há solução")
         }
     });
