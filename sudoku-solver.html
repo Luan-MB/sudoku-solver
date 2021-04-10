@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="sudoku-solver.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="sudoku-solver.js"></script>
-    <title>Sudoku Sovler</title>
+    <title>Sudoku Solver</title>
 </head>
 <body>
     <h1>Sudoku Solver</h1>
-    <form id="grid">
+    <div id="grid">
             <input maxlength="1" type="number" class="top left">
             <input maxlength="1" type="number" class="top">
             <input maxlength="1" type="number" class="top right">
@@ -101,9 +101,13 @@
             <input maxlength="1" type="number" class="bottom left">
             <input maxlength="1" type="number" class="bottom">
             <input maxlength="1" type="number" class="bottom right">
-    </form>
+    </div>
     <br>
-    <input type="button" value="Enter" id="enter">
-    <input type="button" value="Reset" id="reset">
+    <div id="buttons">
+        <input type="button" value="Enter" id="enter">
+        <input type="button" value="Reset" id="reset">
+        <input type="button" value="Clear" id="clear">
+    </div>
+    <p id="status"></p>
 </body>
 </html>

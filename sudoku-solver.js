@@ -113,23 +113,50 @@ function writeCells(grid) {
     for (row=0;row<grid.length;row++) {
         for (col=0;col<grid[row].length;col++) {
             elem = INPUT.shift();
-            elem.value = grid[row][col];
+            if (elem.value != "")
+                elem.style.backgroundColor = "#99DBF0";
+            elem.value = grid[row][col];   
             elem.disabled = true;
         }
     }
 }
 
+function resetCells() {
+
+    for (var i=0;i<81;i++) {
+        INPUT.push($('input[type="number"]')[i]);
+    }
+
+    INPUT.forEach(() => {
+        if (this.attr('disabled')) {
+            console.log("hey");
+        }
+    })
+}
+
 $(document).ready(function(){
-    $("#enter").click(function(){
+    
+    $("#enter").click(() => {
         var grid = readCells();
-        if (invalidInput(grid))
+        if (invalidInput(grid)) {
             console.log("Entrada inválida");
-        else {
+            $("#status").html("Entrada inválida");
+        } else {
             if (solve(grid)) {
                 writeCells(grid);
                 console.log(grid);
-            } else
-                console.log("Não há solução")
+            } else {
+                console.log("Não há solução");
+                $("#status").html("Não há solução");
+            }
         }
     });
+
+    $("#reset").click(() => {
+        resetCells();
+    })
+    
+    $("#clear").click(() => {
+        location.reload();
+    })
 });
