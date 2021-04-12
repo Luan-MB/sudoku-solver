@@ -119,19 +119,22 @@ function writeCells(grid) {
             elem.disabled = true;
         }
     }
+    $("#enter").prop('disabled',true);
+
 }
 
 function resetCells() {
 
     for (var i=0;i<81;i++) {
-        INPUT.push($('input[type="number"]')[i]);
-    }
-
-    INPUT.forEach(() => {
-        if (this.attr('disabled')) {
-            console.log("hey");
+        elem = $('input[type="number"]')[i];
+        if (!elem.hasAttribute("style")) {
+            elem.value = "";
+        } else {
+            elem.removeAttribute("style");
         }
-    })
+        elem.disabled = false;
+    }
+    $("#enter").prop('disabled',false);
 }
 
 $(document).ready(function(){
@@ -158,5 +161,6 @@ $(document).ready(function(){
     
     $("#clear").click(() => {
         location.reload();
+        console.log("Clear");
     })
 });
